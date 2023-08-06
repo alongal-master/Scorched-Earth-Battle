@@ -1,7 +1,9 @@
 # PyScorchedEarth Bot Version
 ScorchedEarth Multiplayer coding game
 Written in Python programming language using PyGame library.
+
 Original version created by https://github.com/fdeods
+
 Bot Version was modified by Masterschool.
 
 Game is created for 2-6 players, each side has one tank.
