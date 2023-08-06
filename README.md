@@ -9,10 +9,12 @@ Bot Version was modified by Masterschool.
 Game is created for 2-6 players, each side has one tank.
 Game continues, until 1 or no players are left.
 
-Controls:
-* Space - play next turn
+Controls: Space - play next turn
 
 Have fun!
+
+# Screenshot
+![img.png](img.png)
 
 # Bot version
 In this version, the tanks are controlled by Bot objects, implemented in code.
