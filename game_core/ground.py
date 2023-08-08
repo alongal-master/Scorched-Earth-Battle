@@ -89,6 +89,7 @@ class Ground:
                 if not explosion_circle.contains(intersection):
                     self.points[i][1] = int(intersection.coords[0][1])
 
+        self.points[explosion_point[0]][1] += explosion_radius
         return left_ground
 
     def draw_temp_after_explosion(self, explosion_point, explosion_radius):
