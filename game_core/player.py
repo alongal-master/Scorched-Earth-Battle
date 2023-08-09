@@ -29,7 +29,19 @@ class Player:
 
 
     def get_angle_and_power_from_bot(self, tank_list):
-        return self.bot_object.attack(tank_list)
+        try:
+            angle, power = self.bot_object.attack(tank_list)
+            angle, power = int(angle), int(power)
+            if not -90 <= angle <= 90:
+                raise Exception("Wrong angle value: {angle}")
+            if not 0 <= power <= 100:
+                raise Exception("Wrong power value: {power}")
+        except Exception as e:
+            print(f"Error caused by a bot {self.bot_object.get_name()}: {e}")
+            return None, None
+
+        return angle, power
+
 
 
     def update_last_hit_position(self, position):

@@ -249,35 +249,37 @@ class GameManager:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:  # Play turn
                         # Get power and angle from the bot object
+
                         angle, power = self.active_player.get_angle_and_power_from_bot(self.generate_tank_list())
+                        if angle and power:
+                            # Animate the change of angle
+                            rad_angle = radians(angle)
+                            current_angle = self.active_tank.get_current_angle()
+                            angle_delta = angle_step if current_angle < rad_angle else -angle_step # In which direction should we move the angle
+                            num_of_changes = int((current_angle - rad_angle) / angle_step)
+                            for i in range(abs(num_of_changes)):
+                                self.active_tank.update_turret_angle(angle_delta)
+                                pygame.time.wait(100)
+                                self.draw_all()
+                                pygame.display.update()
 
-                        # Animate the change of angle
-                        rad_angle = radians(angle)
-                        current_angle = self.active_tank.get_current_angle()
-                        angle_delta = angle_step if current_angle < rad_angle else -angle_step # In which direction should we move the angle
-                        num_of_changes = int((current_angle - rad_angle) / angle_step)
-                        for i in range(abs(num_of_changes)):
-                            self.active_tank.update_turret_angle(angle_delta)
-                            pygame.time.wait(100)
-                            self.draw_all()
-                            pygame.display.update()
-
-                        # Animate the change of power
-                        current_power = self.active_tank.get_current_power()
-                        power_delta = 1 if current_power < power else -1
-                        power_changes = abs(current_power - power)
-                        for i in range(power_changes):
-                            self.active_tank.update_tank_power(power_delta)
-                            pygame.time.wait(20)
-                            self.draw_all()
-                            pygame.display.update()
-                        pygame.time.wait(1000) # Wait before shooting
-                        shell_position = self.fire_simple_shell(self.active_tank)
-                        self.update_players()
-                        print(f"Team {self.active_player.name} attacked with angle={angle}, power={power}")
-                        # Update bot with their hit position
-                        self.active_player.update_last_hit_position((shell_position[0], display_height-shell_position[1]))
+                            # Animate the change of power
+                            current_power = self.active_tank.get_current_power()
+                            power_delta = 1 if current_power < power else -1
+                            power_changes = abs(current_power - power)
+                            for i in range(power_changes):
+                                self.active_tank.update_tank_power(power_delta)
+                                pygame.time.wait(20)
+                                self.draw_all()
+                                pygame.display.update()
+                            pygame.time.wait(1000) # Wait before shooting
+                            print(f"Team {self.active_player.name} attacked with angle={angle}, power={power}")
+                            shell_position = self.fire_simple_shell(self.active_tank)
+                            self.update_players()
+                            # Update bot with their hit position
+                            self.active_player.update_last_hit_position((shell_position[0], display_height-shell_position[1]))
                         self.active_tank = self.active_player.next_active_tank()
+
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         angle_change = 0
