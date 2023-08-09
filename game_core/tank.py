@@ -86,6 +86,8 @@ class Tank:
             damage = int(((explosion_radius - distance_from_tank) / explosion_radius) * explosion_power)
 
         self.tank_health = max(self.tank_health - damage, 0)
+        if damage:
+            print(f"Tank {self.name} was hit! {damage} health points taken")
         if self.tank_health == 0:
             return True
         else:
