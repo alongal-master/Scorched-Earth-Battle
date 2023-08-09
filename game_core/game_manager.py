@@ -256,7 +256,7 @@ class GameManager:
                             num_of_changes = int((current_angle - rad_angle) / angle_step)
                             for i in range(abs(num_of_changes)):
                                 self.active_tank.update_turret_angle(angle_delta)
-                                pygame.time.wait(20)
+                                pygame.time.wait(50)
                                 self.draw_all()
                                 pygame.display.update()
 
@@ -269,7 +269,7 @@ class GameManager:
                                 pygame.time.wait(20)
                                 self.draw_all()
                                 pygame.display.update()
-                            pygame.time.wait(250) # Wait before shooting
+                            pygame.time.wait(500) # Wait before shooting
                             print(f"Team {self.active_player.name} attacked with angle={angle}, power={power}")
                             shell_position = self.fire_simple_shell(self.active_tank)
                             self.update_players()
