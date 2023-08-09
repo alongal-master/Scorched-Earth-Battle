@@ -1,14 +1,12 @@
 import pygame
 from shapely.geometry import LineString
-from random import choice
 from math import sin, cos, radians
 
-import game_core.constants
 from game_core.constants import *
 from game_core.ground import Ground
 from game_core.player import Player
 from game_core.utils import animate_ground_sloughing, halt_whole_game, animate_explosion, message_to_screen
-from bots import bots
+
 
 class GameManager:
     """
@@ -34,6 +32,7 @@ class GameManager:
         self.tank_number = tank_number
         self.free_colors = ['red', 'green', 'blue', 'purple', 'yellow', 'orange', 'cyan', 'magenta']
         self.player_color_dict = {}
+
     def reinitialize_players(self):
         """
         Reinitialize available tanks in the game
@@ -202,11 +201,12 @@ class GameManager:
                 continue
             new_dict = {}
             new_dict["name"] = player.bot_object.get_name()
-            new_dict["position"] = (tanks[0].position[0],game_core.constants.display_height - tanks[0].position[1])
+            new_dict["position"] = (tanks[0].position[0], display_height - tanks[0].position[1])
             new_dict["health"] = tanks[0].tank_health
             tank_list.append(new_dict)
 
         return tank_list
+
     def run(self):
         """
         Run game
@@ -217,9 +217,6 @@ class GameManager:
         game_exit = False
         game_over = False
         fps = 15
-
-        angle_change = 0
-        power_change = 0
 
         while not game_exit:
             if game_over:
@@ -259,7 +256,7 @@ class GameManager:
                             num_of_changes = int((current_angle - rad_angle) / angle_step)
                             for i in range(abs(num_of_changes)):
                                 self.active_tank.update_turret_angle(angle_delta)
-                                pygame.time.wait(100)
+                                pygame.time.wait(20)
                                 self.draw_all()
                                 pygame.display.update()
 
@@ -272,19 +269,13 @@ class GameManager:
                                 pygame.time.wait(20)
                                 self.draw_all()
                                 pygame.display.update()
-                            pygame.time.wait(1000) # Wait before shooting
+                            pygame.time.wait(250) # Wait before shooting
                             print(f"Team {self.active_player.name} attacked with angle={angle}, power={power}")
                             shell_position = self.fire_simple_shell(self.active_tank)
                             self.update_players()
                             # Update bot with their hit position
                             self.active_player.update_last_hit_position((shell_position[0], display_height-shell_position[1]))
                         self.active_tank = self.active_player.next_active_tank()
-
-                elif event.type == pygame.KEYUP:
-                    if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                        angle_change = 0
-                    elif event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                        power_change = 0
 
             self.draw_all()
 
