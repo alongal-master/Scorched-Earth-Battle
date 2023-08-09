@@ -46,14 +46,14 @@ class TankBotInterface(ABC):
 
 class RandomAttacker(TankBotInterface):
 
-    def __init__(self, name, preferred_color=""):
-        super().__init__(name, "green")
+    def __init__(self, name="Randomer", preferred_color="green"):
+        super().__init__(name, preferred_color)
 
     def attack(self, other_bots):
         """"
         This attack will select a random angle, and attack it with 20 power.
         """
-        angle = random.randrange(-90,90)
+        angle = random.randrange(-90, 90)
         power = random.randrange(0, 100)
         return angle, power
 

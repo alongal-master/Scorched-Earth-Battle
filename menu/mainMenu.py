@@ -112,9 +112,9 @@ def start_game():
     Function under New Game button
     :return: none
     """
-    bot1 = bots.bots.RandomAttacker(name="Random")
-    bot2 = bots.bots.RandomAttacker(name="Random second")
-    bot3 = bots.bots.RandomAttacker(name="Random bestdsadsadsadsadsadsaddsadsads")
+    bot1 = bots.bots.RandomAttacker()
+    bot2 = bots.bots.RandomAttacker(name="Random 2")
+    bot3 = bots.bots.RandomAttacker(name="Random 3")
     GameManager(constants.tanks_number, [bot1, bot2, bot3]).run()
 
 
