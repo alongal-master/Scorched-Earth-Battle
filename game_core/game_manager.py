@@ -275,6 +275,9 @@ class GameManager:
                             self.update_players()
                             # Update bot with their hit position
                             self.active_player.update_last_hit_position((shell_position[0], display_height-shell_position[1]))
+                        else:
+                            self.update_players()
+
                         self.active_tank = self.active_player.next_active_tank()
 
             self.draw_all()
